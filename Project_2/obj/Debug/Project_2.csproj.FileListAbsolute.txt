@@ -6,3 +6,10 @@ C:\Users\USER\Documents\Projects\Project_2\Project_2\obj\Debug\Project_2.csproj.
 C:\Users\USER\Documents\Projects\Project_2\Project_2\obj\Debug\Project_2.csproj.CoreCompileInputs.cache
 C:\Users\USER\Documents\Projects\Project_2\Project_2\obj\Debug\Project_2.exe
 C:\Users\USER\Documents\Projects\Project_2\Project_2\obj\Debug\Project_2.pdb
+D:\Code_project\Snake_game\Project_2\bin\Debug\Project_2.exe
+D:\Code_project\Snake_game\Project_2\bin\Debug\Project_2.pdb
+D:\Code_project\Snake_game\Project_2\obj\Debug\Project_2.csproj.AssemblyReference.cache
+D:\Code_project\Snake_game\Project_2\obj\Debug\Project_2.csproj.SuggestedBindingRedirects.cache
+D:\Code_project\Snake_game\Project_2\obj\Debug\Project_2.csproj.CoreCompileInputs.cache
+D:\Code_project\Snake_game\Project_2\obj\Debug\Project_2.exe
+D:\Code_project\Snake_game\Project_2\obj\Debug\Project_2.pdb

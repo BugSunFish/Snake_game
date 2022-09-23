@@ -18,6 +18,7 @@ namespace Project_2
         static int yb = y;
         static int f = 1;
         static int dis = 1;
+        static bool end = false;
         static Stopwatch sw = new Stopwatch();
         static Thread t = new Thread(Walk);
         static Thread g = new Thread(Grafics);
@@ -46,6 +47,19 @@ namespace Project_2
             }
         }
 
+        static void Clear()
+        {
+            Console.Clear();
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+
         static void Grafics()
         {
             while (true)
@@ -54,6 +68,14 @@ namespace Project_2
                 Console.Write(" ");
                 Console.SetCursorPosition(x, y);
                 Console.Write("@");
+                if (end)
+                {
+                    Thread.Sleep(50);
+                    int x = 8;
+                    int y = 8;
+                    int xb = x;
+                    int yb = y;
+                }
             }
         }
 
@@ -79,6 +101,7 @@ namespace Project_2
                     default:
                         break;
                 }
+                
             }
         }
 
@@ -90,7 +113,7 @@ namespace Project_2
                 Thread.Sleep(300);
                 xb = x;
                 yb = y;
-                switch(dis)
+                switch (dis)
                 {
                     case 1:
                         y--;
@@ -105,6 +128,25 @@ namespace Project_2
                         x++;
                         break;
                 }
+                switch (x, y)
+                {
+                    case ( >= 0 and <= 15, 15):
+                    case ( >= 0 and <= 15, 0):
+                    case ( 15, >= 0 and <= 15):
+                    case ( 0, >= 0 and <= 15):
+                        end = true;
+                        break;
+                }
+                if (end)
+                {
+                    Clear();
+                    Room();
+                    x = 8;
+                    y = 8;
+                    xb = x;
+                    yb = y;
+                    break;
+                }
                 sw.Stop();
             }
         }
@@ -116,7 +158,12 @@ namespace Project_2
             Room();
             t.Start();
             g.Start();
-            Game();
+            while (true) 
+            {
+                end = false;
+                int dis = 1;
+                Game();
+            }
         }
     }
 }

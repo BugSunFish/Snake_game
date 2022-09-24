@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using static System.Console;
 
-namespace Project_2
+namespace Snake_game
 {
     internal class Program
     {
@@ -16,12 +16,15 @@ namespace Project_2
         static int y = 8;
         static int xb = x;
         static int yb = y;
-        static int f = 1;
+        static int f = 0;
         static int dis = 1;
         static bool end = false;
+        static int[] xt = new int[2];
+        static int[] yt = new int[2];
         static Stopwatch sw = new Stopwatch();
         static Thread t = new Thread(Walk);
         static Thread g = new Thread(Grafics);
+        static Thread l = new Thread(Tail);
 
         static void Room()
         {
@@ -60,6 +63,33 @@ namespace Project_2
             }
         }
 
+        static void Tail()
+        {
+            while (true)
+            {
+                //for (int k = 2; k < xt.Length; k++)
+                //{
+                //    if (xt[k] == x && yt[k] == y - 1 && dis == 1)
+                //    {
+                //        end = true;
+                //    }
+                //    if (xt[k] == x && yt[k] == y + 1 && dis == 2)
+                //    {
+                //        end = true;
+                //    }
+                //    if (xt[k] == x && yt[k] == x - 1 && dis == 3)
+                //    {
+                //        end = true;
+                //    }
+                //    if (xt[k] == x && yt[k] == x + 1 && dis == 4)
+                //    {
+                //        end = true;
+                //    }
+                //}
+            }
+        }
+
+
         static void Grafics()
         {
             while (true)
@@ -68,9 +98,12 @@ namespace Project_2
                 Console.Write(" ");
                 Console.SetCursorPosition(x, y);
                 Console.Write("@");
+                Console.SetCursorPosition(0, 0);
+                Console.Write("█");
+                Thread.Sleep(0);
                 if (end)
                 {
-                    Thread.Sleep(50);
+                    Thread.Sleep(100);
                     int x = 8;
                     int y = 8;
                     int xb = x;
@@ -98,10 +131,13 @@ namespace Project_2
                     case ConsoleKey.D:
                         dis = 4;
                         break;
+                    case ConsoleKey.Spacebar:
+                        Array.Resize(ref xt, xt.Length + 1);
+                        Array.Resize(ref yt, yt.Length + 1);
+                        break;
                     default:
                         break;
                 }
-                
             }
         }
 
@@ -110,9 +146,13 @@ namespace Project_2
             while (true)
             {
                 sw.Start();
-                Thread.Sleep(300);
-                xb = x;
-                yb = y;
+                xt[xt.Length-1] = x;
+                yt[yt.Length-1] = y;
+                f++;
+                Array.Resize(ref xt, xt.Length + 1);
+                Array.Resize(ref yt, yt.Length + 1);
+                xb = xt[f];
+                yb = yt[f];
                 switch (dis)
                 {
                     case 1:
@@ -137,6 +177,7 @@ namespace Project_2
                         end = true;
                         break;
                 }
+                Thread.Sleep(300);
                 if (end)
                 {
                     Clear();
@@ -145,6 +186,8 @@ namespace Project_2
                     y = 8;
                     xb = x;
                     yb = y;
+                    //Array.Resize(ref xt, xt.Length - xt.Length + 2 );
+                    //Array.Resize(ref yt, yt.Length - yt.Length + 2 );
                     break;
                 }
                 sw.Stop();
@@ -158,6 +201,7 @@ namespace Project_2
             Room();
             t.Start();
             g.Start();
+            l.Start();
             while (true) 
             {
                 end = false;

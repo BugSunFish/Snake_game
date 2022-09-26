@@ -16,9 +16,13 @@ namespace Snake_game
         static int y = 8;
         static int xb = x;
         static int yb = y;
+        static int xa = 1;
+        static int ya = 1;
         static int f = 0;
         static int dis = 1;
+        static Random random = new Random();
         static bool end = false;
+        static bool apple = false;
         static int[] xt = new int[2];
         static int[] yt = new int[2];
         static Stopwatch sw = new Stopwatch();
@@ -50,6 +54,12 @@ namespace Snake_game
             }
         }
 
+        static void Tail()
+        {
+            Array.Resize(ref xt, xt.Length + 1);
+            Array.Resize(ref yt, yt.Length + 1);
+        }
+
         static void Clear()
         {
             Console.Clear();
@@ -76,6 +86,11 @@ namespace Snake_game
             {
                 Console.SetCursorPosition(xb, yb);
                 Console.Write(" ");
+                if (apple == true)
+                {
+                    Console.SetCursorPosition(xa, ya);
+                    Console.Write("O");
+                }
                 Console.SetCursorPosition(x, y);
                 Console.Write("@");
                 Console.SetCursorPosition(0, 0);
@@ -123,8 +138,7 @@ namespace Snake_game
                         }
                         break;
                     case ConsoleKey.Spacebar:
-                        Array.Resize(ref xt, xt.Length + 1);
-                        Array.Resize(ref yt, yt.Length + 1);
+                        Tail();
                         break;
                     default:
                         break;
@@ -136,6 +150,31 @@ namespace Snake_game
         {
             while (true)
             {
+                sw.Start();
+                if (x == xa && y == ya)
+                {
+                    apple = false;
+                    Tail();
+                }
+                while (true)
+                {
+                    if (apple == false)
+                    {
+                        xa = random.Next(14) + 1;
+                        ya = random.Next(14) + 1;
+                        for (int k = f; k < xt.Length; k++)
+                        {
+                            if (xt[k] != xa && yt[k] != ya && xt[k] != x && yt[k] != y)
+                            {
+                                apple = true;
+                            }
+                        }
+                    }
+                    if (apple == true)
+                    {
+                        break;
+                    }
+                }
                 for (int k = f; k < xt.Length; k++)
                 {
                     if (xt[k] == x && yt[k] == y - 1 && dis == 1)
@@ -155,7 +194,6 @@ namespace Snake_game
                         end = true;
                     }
                 }
-                sw.Start();
                 xt[xt.Length-1] = x;
                 yt[yt.Length-1] = y;
                 f++;
@@ -199,6 +237,7 @@ namespace Snake_game
                     Array.Resize(ref xt, xt.Length - xt.Length + 2 );
                     Array.Resize(ref yt, yt.Length - yt.Length + 2 );
                     f = 0;
+                    apple = false;
                     break;
                 }
                 sw.Stop();

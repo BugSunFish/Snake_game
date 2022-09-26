@@ -24,7 +24,7 @@ namespace Snake_game
         static Stopwatch sw = new Stopwatch();
         static Thread t = new Thread(Walk);
         static Thread g = new Thread(Grafics);
-        static Thread l = new Thread(Tail);
+        static Thread n = new Thread(Nnetwork);
 
         static void Room()
         {
@@ -63,32 +63,12 @@ namespace Snake_game
             }
         }
 
-        static void Tail()
+        static void Nnetwork()
         {
             while (true)
             {
-                //for (int k = 2; k < xt.Length; k++)
-                //{
-                //    if (xt[k] == x && yt[k] == y - 1 && dis == 1)
-                //    {
-                //        end = true;
-                //    }
-                //    if (xt[k] == x && yt[k] == y + 1 && dis == 2)
-                //    {
-                //        end = true;
-                //    }
-                //    if (xt[k] == x && yt[k] == x - 1 && dis == 3)
-                //    {
-                //        end = true;
-                //    }
-                //    if (xt[k] == x && yt[k] == x + 1 && dis == 4)
-                //    {
-                //        end = true;
-                //    }
-                //}
             }
         }
-
 
         static void Grafics()
         {
@@ -100,10 +80,10 @@ namespace Snake_game
                 Console.Write("@");
                 Console.SetCursorPosition(0, 0);
                 Console.Write("█");
-                Thread.Sleep(0);
+                Thread.Sleep(10);
                 if (end)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(150);
                     int x = 8;
                     int y = 8;
                     int xb = x;
@@ -120,16 +100,27 @@ namespace Snake_game
                 switch (consoleKeyInfo.Key)
                 {
                     case ConsoleKey.W:
-                        dis = 1;
+                        if (dis != 2) {
+                            dis = 1;
+                        }
                         break;
                     case ConsoleKey.S:
-                        dis = 2;
+                        if (dis != 1)
+                        {
+                            dis = 2;
+                        }
                         break;
                     case ConsoleKey.A:
-                        dis = 3;
+                        if (dis != 4)
+                        {
+                            dis = 3;
+                        }
                         break;
                     case ConsoleKey.D:
-                        dis = 4;
+                        if (dis != 3)
+                        {
+                            dis = 4;
+                        }
                         break;
                     case ConsoleKey.Spacebar:
                         Array.Resize(ref xt, xt.Length + 1);
@@ -145,6 +136,25 @@ namespace Snake_game
         {
             while (true)
             {
+                for (int k = f; k < xt.Length; k++)
+                {
+                    if (xt[k] == x && yt[k] == y - 1 && dis == 1)
+                    {
+                        end = true;
+                    }
+                    if (xt[k] == x && yt[k] == y + 1 && dis == 2)
+                    {
+                        end = true;
+                    }
+                    if (xt[k] == x - 1 && yt[k] == y && dis == 3)
+                    {
+                        end = true;
+                    }
+                    if (xt[k] == x + 1 && yt[k] == y && dis == 4)
+                    {
+                        end = true;
+                    }
+                }
                 sw.Start();
                 xt[xt.Length-1] = x;
                 yt[yt.Length-1] = y;
@@ -186,8 +196,9 @@ namespace Snake_game
                     y = 8;
                     xb = x;
                     yb = y;
-                    //Array.Resize(ref xt, xt.Length - xt.Length + 2 );
-                    //Array.Resize(ref yt, yt.Length - yt.Length + 2 );
+                    Array.Resize(ref xt, xt.Length - xt.Length + 2 );
+                    Array.Resize(ref yt, yt.Length - yt.Length + 2 );
+                    f = 0;
                     break;
                 }
                 sw.Stop();
@@ -201,7 +212,7 @@ namespace Snake_game
             Room();
             t.Start();
             g.Start();
-            l.Start();
+            n.Start();
             while (true) 
             {
                 end = false;

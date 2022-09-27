@@ -86,6 +86,13 @@ namespace Snake_game
             {
                 Console.SetCursorPosition(xb, yb);
                 Console.Write(" ");
+                for (int t = f; t < xt.Length; t++)
+                {
+                    if (xt[t] == xa && yt[t] == ya)
+                    {
+                        apple = false;
+                    }
+                }
                 if (apple == true)
                 {
                     Console.SetCursorPosition(xa, ya);
@@ -95,7 +102,7 @@ namespace Snake_game
                 Console.Write("@");
                 Console.SetCursorPosition(0, 0);
                 Console.Write("█");
-                Thread.Sleep(10);
+                Thread.Sleep(50);
                 if (end)
                 {
                     Thread.Sleep(150);
@@ -103,6 +110,7 @@ namespace Snake_game
                     int y = 8;
                     int xb = x;
                     int yb = y;
+                    apple = false;
                 }
             }
         }
@@ -143,6 +151,7 @@ namespace Snake_game
                     default:
                         break;
                 }
+                Thread.Sleep(150);
             }
         }
 
@@ -156,24 +165,11 @@ namespace Snake_game
                     apple = false;
                     Tail();
                 }
-                while (true)
+                if (apple == false)
                 {
-                    if (apple == false)
-                    {
-                        xa = random.Next(14) + 1;
-                        ya = random.Next(14) + 1;
-                        for (int k = f; k < xt.Length; k++)
-                        {
-                            if (xt[k] != xa && yt[k] != ya && xt[k] != x && yt[k] != y)
-                            {
-                                apple = true;
-                            }
-                        }
-                    }
-                    if (apple == true)
-                    {
-                        break;
-                    }
+                    xa = random.Next(14) + 1;
+                    ya = random.Next(14) + 1;
+                    apple = true;
                 }
                 for (int k = f; k < xt.Length; k++)
                 {
@@ -225,7 +221,7 @@ namespace Snake_game
                         end = true;
                         break;
                 }
-                Thread.Sleep(300);
+                Thread.Sleep(150);
                 if (end)
                 {
                     Clear();
